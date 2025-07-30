@@ -10,6 +10,7 @@ function getNextDate(date, days) {
 function App() {
   const STORAGE_KEY = "vocab-words";
 
+  const [mode, setMode] = useState("card"); // デフォルトは単語帳モード
   const [words, setWords] = useState([]);
   const [newEnglish, setNewEnglish] = useState("");
   const [newJapanese, setNewJapanese] = useState("");
@@ -86,80 +87,110 @@ function App() {
     <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
       <h1>英単語帳</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="English"
-          value={newEnglish}
-          onChange={(e) => setNewEnglish(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="日本語訳"
-          value={newJapanese}
-          onChange={(e) => setNewJapanese(e.target.value)}
-          required
-        />
-        <button type="submit">追加</button>
-      </form>
+      {/* 🔻モード切り替えボタン */}
+      <div style={{ marginBottom: "20px" }}>
+        <button
+          onClick={() => setMode("card")}
+          style={{
+            backgroundColor: mode === "card" ? "#d0ebff" : "#eee",
+            marginRight: "10px",
+          }}
+        >
+          単語帳モード
+        </button>
+        <button
+          onClick={() => setMode("test")}
+          style={{
+            backgroundColor: mode === "test" ? "#d0ebff" : "#eee",
+          }}
+        >
+          テストモード
+        </button>
+      </div>
 
-      <hr />
+      {/* ✅ 単語帳モード */}
+      {mode === "card" && (
+        <>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="English"
+              value={newEnglish}
+              onChange={(e) => setNewEnglish(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="日本語訳"
+              value={newJapanese}
+              onChange={(e) => setNewJapanese(e.target.value)}
+              required
+            />
+            <button type="submit">追加</button>
+          </form>
 
-      {dueWords.length === 0 ? (
-        <p>表示する単語がありません。</p>
-      ) : (
-        dueWords.map((word, index) => {
-          const cardStyle = {
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            padding: "10px",
-            marginBottom: "10px",
-            backgroundColor:
-              word.status === "known"
-                ? "#d2ffd2"
-                : word.status === "unknown"
-                ? "#ffd2d2"
-                : "#fff",
-            cursor: "pointer",
-          };
+          <hr />
 
-          return (
-            <div
-              key={index}
-              style={cardStyle}
-              onClick={() => {
-                const newWords = [...words];
-                newWords[index].showMeaning = !newWords[index].showMeaning;
-                setWords(newWords);
-              }}
-            >
-              <h3>{word.english}</h3>
-              {word.showMeaning && (
-                <>
-                  <p>{word.japanese}</p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleUpdateStatus(index, "known");
-                    }}
-                  >
-                    ✅ 知ってた
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleUpdateStatus(index, "unknown");
-                    }}
-                  >
-                    ❌ 知らなかった
-                  </button>
-                  <p>状態: {word.status}</p>
-                </>
-              )}
-            </div>
-          );
-        })
+          {dueWords.length === 0 ? (
+            <p>表示する単語がありません。</p>
+          ) : (
+            dueWords.map((word, index) => {
+              const cardStyle = {
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                padding: "10px",
+                marginBottom: "10px",
+                backgroundColor:
+                  word.status === "known"
+                    ? "#d2ffd2"
+                    : word.status === "unknown"
+                    ? "#ffd2d2"
+                    : "#fff",
+              };
+
+              return (
+                <div
+                  key={index}
+                  style={cardStyle}
+                  onClick={() => {
+                    const newWords = [...words];
+                    newWords[index].showMeaning = !newWords[index].showMeaning;
+                    setWords(newWords);
+                  }}
+                >
+                  <h3>{word.english}</h3>
+                  {word.showMeaning && (
+                    <>
+                      <p>{word.japanese}</p>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUpdateStatus(index, "known");
+                        }}
+                      >
+                        ✅ 知ってた
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUpdateStatus(index, "unknown");
+                        }}
+                      >
+                        ❌ 知らなかった
+                      </button>
+                      <p>状態: {word.status}</p>
+                    </>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </>
+      )}
+
+      {/* 🚧 テストモード（これから追加！） */}
+      {mode === "test" && (
+        <p>テストモードはまだ準備中です。</p>
       )}
     </div>
   );
