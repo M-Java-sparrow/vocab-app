@@ -1,12 +1,17 @@
-# React + Vite
+# 📘 英単語学習アプリ - VocabMemo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🔍 概要
+このアプリは、自分の苦手な英単語を効率よく復習するために作成した、React製のWebアプリです。スペースリピティション（間隔反復）に対応し、毎日の学習に最適化された出題順を提供します。
 
-Currently, two official plugins are available:
+## 🛠 技術スタック
+- React (Vite)
+- JavaScript
+- localStorage（学習履歴保存）
+- GitHub Pages（今後デプロイ予定）
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 主な機能
+- 単語の追加・編集
+- 単語帳形式の表示（表：英語、裏：日本語）
+- 「知ってた／知らなかった」記録と学習履歴
+- スペースリピティションアルゴリズムで出題調整
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
